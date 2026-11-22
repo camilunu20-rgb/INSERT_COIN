@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSERT COIN | Choose Your Path</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Librería p5.js -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+</head>
+
+<body>
+
+    <main id="juego">
+
+        <!-- PRESENTACIÓN -->
+        <header class="presentacion">
+            <p class="etiqueta">AN INTERACTIVE  EXPERIENCE</p>
+
+            <h1>INSERT COIN</h1>
+
+            <h2>EVERY CHOICE HAS A CONSEQUENCE</h2>
+
+            <p class="descripcion">
+                Un juego. Una habitación. Decisiones que pueden cambiarlo todo.
+            </p>
+        </header>
+
+        <!-- CONTROL DE AUDIO -->
+        <button id="btnAudio" class="audio-control">
+            ♪ AUDIO: OFF
+        </button>
+
+        <!-- MENÚ PRINCIPAL -->
+        <section id="menu" class="pantalla activa">
+
+            <p class="mensaje-inicio">
+                ¿Estás preparado para descubrir qué hay detrás de la puerta?
+            </p>
+
+            <button id="btnStart">
+                ▶ START GAME
+            </button>
+
+            <p class="insert-coin">
+                INSERT COIN TO CONTINUE
+            </p>
+
+        </section>
+
+        <!-- HABITACIÓN -->
+        <section id="habitacion" class="pantalla">
+
+            <div id="tituloNivel" class="titulo-nivel">LEVEL 01</div>
+
+            <h2 id="tituloHabitacion">HABITACIÓN DESCONOCIDA</h2>
+
+            <p id="textoHistoria">
+                Despertás en una habitación desconocida.
+                Hay una computadora y una puerta.
+                ¿Qué querés hacer?
+            </p>
+
+            <div id="panelNivel2" class="panel-nivel" hidden>
+                <p class="etiqueta">LA HABITACIÓN QUE TE DEVUELVE LA MIRADA</p>
+                <p class="pregunta-nivel">Cuando algo te da miedo, ¿preferís saber qué es aunque pueda ser peor?</p>
+                <div class="opciones opciones-nivel">
+                    <button id="btnNivel2Si">SÍ, PREFIERO SABERLO</button>
+                    <button id="btnNivel2No">NO, PREFIERO NO SABERLO</button>
+                </div>
+                <p id="mensajeNivel2" class="mensaje-sistema" aria-live="polite"></p>
+            </div>
+
+            <div id="panelNivel3" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 03: LA NOTA Y LA SALIDA</p>
+                <p id="avisoExplorar">Explorá la habitación. Hay algo que el sistema quiere que encuentres.</p>
+                <div id="preguntaNivel3" hidden>
+                    <p class="pregunta-nivel">¿Vas a confiar en que el sistema te muestre el camino?</p>
+                    <div class="opciones opciones-nivel">
+                        <button id="btnNivel3Si">SÍ, VOY A CONFIAR</button>
+                        <button id="btnNivel3No">NO, NO CONFÍO</button>
+                    </div>
+                    <p id="mensajeNivel3" class="mensaje-sistema" aria-live="polite"></p>
+                </div>
+            </div>
+
+            <div id="panelNivel4" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 04</p>
+                <h3>UNA DECISIÓN SIN VUELTA</h3>
+                <p id="avisoNivel4">Llegaste a la habitación. La computadora ya está esperando tu decisión.</p>
+                <p id="preguntaNivel4" class="pregunta-nivel">Si perder una parte de vos fuera la única manera de escapar, ¿lo harías?</p>
+                <div class="opciones opciones-nivel">
+                    <button id="btnNivel4Si">SÍ, HARÍA LO NECESARIO</button>
+                    <button id="btnNivel4No">NO, NO A CUALQUIER PRECIO</button>
+                </div>
+                <p id="mensajeNivel4" class="mensaje-sistema" aria-live="polite"></p>
+            </div>
+
+            <div id="panelNivel5" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 05: LO QUE RECORDÁS NO NECESARIAMENTE PASÓ</p>
+                <p id="avisoNivel5">La habitación parece tranquila. Tu sombra tarda un instante en seguirte.</p>
+                <p id="fragmentoNivel5" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="preguntaRecuerdosNivel5" hidden>
+                    <p class="pregunta-nivel">¿ESTÁS SEGURO DE RECORDAR LO QUE PASÓ?</p>
+                    <div class="opciones opciones-nivel">
+                        <button id="btnNivel5RecuerdoSi">SÍ, RECUERDO LO QUE HICE</button>
+                        <button id="btnNivel5RecuerdoNo">NO, HAY COSAS QUE NO RECUERDO</button>
+                    </div>
+                </div>
+                <p id="mensajeNivel5" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="preguntaBorrarNivel5" hidden>
+                    <p class="pregunta-nivel">SI YO PUDIERA BORRAR UNO DE TUS RECUERDOS PARA QUE DEJES DE SUFRIR, ¿ME LO PERMITIRÍAS?</p>
+                    <div class="opciones opciones-nivel">
+                        <button id="btnNivel5BorrarSi">SÍ, SI ESO ME AYUDA A ESCAPAR</button>
+                        <button id="btnNivel5BorrarNo">NO, MIS RECUERDOS SON MÍOS</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panelNivel6" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 06: EL LUGAR QUE NO DEBERÍA EXISTIR</p>
+                <p id="avisoNivel6">La habitación parece más grande de lo posible. La computadora se encendió sola.</p>
+                <p id="mensajeComputadoraNivel6" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="preguntaNivel6" hidden>
+                    <p class="pregunta-nivel">SI YO PUEDO CONTROLAR LO QUE HACÉS, ¿REALMENTE ESTÁS ELIGIENDO?</p>
+                    <div class="opciones opciones-nivel">
+                        <button id="btnNivel6Si">SÍ, SIGO TENIENDO EL CONTROL</button>
+                        <button id="btnNivel6No">NO, CREO QUE ESTÁS CONTROLÁNDOME</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panelNivel7" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 07: ¿HAY ALGUIEN AHÍ?</p>
+                <p id="avisoNivel7">La computadora está encendida, pero todavía no muestra nada.</p>
+                <p id="mensajeComputadoraNivel7" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="permisoMicrofonoNivel7" class="permiso-microfono" hidden>
+                    <p>El sistema quiere comprobar si hay alguien del otro lado. Si aceptás, el juego analizará el volumen y el tipo aproximado de sonido en esta página; no grabará ni transmitirá el audio.</p>
+                    <div class="opciones opciones-nivel">
+                        <button id="btnPermitirMicrofonoNivel7">ACEPTAR MICRÓFONO</button>
+                        <button id="btnRechazarMicrofonoNivel7">CONTINUAR SIN MICRÓFONO</button>
+                    </div>
+                </div>
+                <div id="preguntaNivel7" hidden>
+                    <p class="pregunta-nivel">SI ALGUIEN PUDIERA ESCUCHARTE DESDE ESTE LUGAR, ¿QUÉ LE DIRÍAS?</p>
+                    <div class="opciones opciones-nivel opciones-nivel7">
+                        <button data-respuesta-nivel7="ayuda">QUE NECESITO AYUDA</button>
+                        <button data-respuesta-nivel7="advierte">QUE NO CONFÍE EN EL SISTEMA</button>
+                        <button data-respuesta-nivel7="tranquilo">QUE NO HAY NADA DE QUÉ PREOCUPARSE</button>
+                        <button data-respuesta-nivel7="silencio">NO TENGO NADA QUE DECIR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panelNivel8" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 08: DETRÁS DE LAS PAREDES</p>
+                <p id="avisoNivel8">La puerta se cierra detrás de vos. El pasillo parece no terminar.</p>
+                <p id="mensajeComputadoraNivel8" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="puertasNivel8" class="puertas-nivel8" hidden>
+                    <p>El pasillo tiene cinco puertas. ¿Cuál querés observar?</p>
+                    <div class="opciones opciones-nivel opciones-puertas8">
+                        <button data-puerta-nivel8="1">PUERTA 1 · MARCAS</button>
+                        <button data-puerta-nivel8="2">PUERTA 2 · LUZ</button>
+                        <button data-puerta-nivel8="3">PUERTA 3 · INSCRIPCIÓN</button>
+                        <button data-puerta-nivel8="4">PUERTA 4 · CADENAS</button>
+                        <button data-puerta-nivel8="5">PUERTA 5 · PANTALLA</button>
+                    </div>
+                </div>
+                <button id="btnEscucharGolpesNivel8" hidden>ESCUCHAR LOS GOLPES</button>
+                <div id="preguntaNivel8" hidden>
+                    <p class="pregunta-nivel">SI HUBIERA OTRAS PERSONAS EN ESTE LUGAR, ¿INTENTARÍAS ENCONTRARLAS?</p>
+                    <div class="opciones opciones-nivel opciones-nivel8">
+                        <button data-respuesta-nivel8="buscar">SÍ, QUIERO SABER QUIÉNES SON</button>
+                        <button data-respuesta-nivel8="salir">NO, SOLAMENTE QUIERO SALIR</button>
+                        <button data-respuesta-nivel8="dudar">NO SÉ SI REALMENTE HAY ALGUIEN</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panelNivel9" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 09: LOS QUE INTENTARON SALIR</p>
+                <h3>LA SALA DE ESPERA</h3>
+                <p id="avisoNivel9" aria-live="polite">La puerta se cerró detrás de vos. Hay rastros de otras personas en la sala.</p>
+                <p id="mensajeComputadoraNivel9" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="preguntaNivel9" hidden>
+                    <p id="textoPreguntaNivel9" class="pregunta-nivel"></p>
+                    <div class="opciones opciones-nivel opciones-nivel9">
+                        <button data-respuesta-nivel9="1"></button>
+                        <button data-respuesta-nivel9="2"></button>
+                        <button data-respuesta-nivel9="3"></button>
+                    </div>
+                </div>
+                <div id="documentoNivel9" class="documento-nivel9" hidden>
+                    <p id="tituloDocumentoNivel9" class="etiqueta"></p>
+                    <p id="textoDocumentoNivel9" aria-live="polite"></p>
+                    <button id="btnCerrarDocumentoNivel9" type="button">VOLVER A LA SALA</button>
+                </div>
+            </div>
+
+            <div id="panelNivel10" class="panel-nivel" hidden>
+                <p class="etiqueta">LEVEL 10: LA ÚLTIMA ELECCIÓN</p>
+                <h3>LA SALA DE CONTROL</h3>
+                <p id="avisoNivel10" aria-live="polite">La luz vuelve poco a poco. Cinco computadoras esperan en la habitación.</p>
+                <p id="mensajeComputadoraNivel10" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="terminalNivel10" class="terminal-nivel10" hidden>
+                    <p class="etiqueta">SESIÓN ABIERTA</p>
+                    <p id="textoTerminalNivel10" aria-live="polite"></p>
+                    <div id="opcionesTerminalNivel10" class="opciones opciones-nivel opciones-terminal10"></div>
+                </div>
+                <div id="accionesFinalNivel10" class="opciones opciones-nivel acciones-final-nivel10" hidden>
+                    <button id="btnSeguirExplorandoNivel10" type="button">SEGUIR EXPLORANDO</button>
+                    <button id="btnReiniciarNivel10" type="button">JUGAR DESDE EL PRINCIPIO</button>
+                </div>
+            </div>
+
+            <p id="instruccionCanvas" class="instruccion-canvas">
+                También podés tocar la computadora o la puerta dentro de la escena.
+            </p>
+
+            <div class="opciones">
+
+                <button id="btnComputadora">
+                    REVISAR COMPUTADORA
+                </button>
+
+                <button id="btnPuerta">
+                    ABRIR PUERTA
+                </button>
+
+            </div>
+
+            <div id="panelAcceso" class="panel-acceso" hidden>
+                <p class="etiqueta">CONTROL DE ACCESO</p>
+                <p id="mensajeAcceso" class="mensaje-sistema" aria-live="polite"></p>
+
+                <form id="formularioAcceso" class="formulario-acceso" autocomplete="off">
+                    <label for="inputCodigoAcceso">CÓDIGO DE 4 DÍGITOS</label>
+                    <div class="fila-acceso">
+                        <input id="inputCodigoAcceso" type="text" inputmode="numeric" maxlength="4" aria-label="Código de acceso">
+                        <button id="btnValidarCodigo" type="submit">PROBAR CÓDIGO</button>
+                    </div>
+                </form>
+
+                <button id="btnCerrarAcceso" type="button">CANCELAR</button>
+            </div>
+
+        </section>
+
+        <!-- COMPUTADORA -->
+        <section id="computadora" class="pantalla">
+
+            <div class="titulo-nivel">SYSTEM MESSAGE</div>
+
+            <h2>COMPUTADORA</h2>
+
+            <p id="saludoSistema" class="mensaje saludo-sistema">
+                <span class="saludo-principal">BIENVENIDO, JUGADOR.</span>
+                <span class="saludo-instruccion">Respondé la pregunta o leé el registro para descubrir qué pasó y encontrar el código de la puerta.</span>
+            </p>
+
+            <p id="textoPregunta" class="pregunta-sistema">
+                ¿ESCUCHÁS ALGO DETRÁS DE LA PUERTA?
+            </p>
+
+            <div class="opciones opciones-pregunta">
+                <button id="btnRespuestaSi">SÍ, ESCUCHO ALGO</button>
+                <button id="btnRespuestaNo">NO, NO ESCUCHO NADA</button>
+            </div>
+
+            <p id="mensajeSistema" class="mensaje-sistema" aria-live="polite">
+                SE REGISTRARÁ TU RESPUESTA.
+            </p>
+
+            <button id="btnConsultarPista">
+                LEER REGISTRO DE ACCESO
+            </button>
+
+            <div id="registroPista" class="registro-pista" hidden>
+                <p class="mensaje">REGISTRO DE ACCESO RECUPERADO:</p>
+                <p id="codigoPista" class="pista">1987</p>
+            </div>
+
+            <button id="btnVolver">
+                ENTRAR A LA HABITACIÓN
+            </button>
+
+        </section>
+
+        <!-- CANVAS DE P5.JS -->
+        <div id="canvas-container" aria-label="Escena interactiva de la habitación"></div>
+
+        <p id="mensajeInterferencia" class="mensaje-interferencia" aria-live="polite"></p>
+
+        <footer>
+            <p>INSERT COIN © 2026 — CHOOSE YOUR PATH</p>
+        </footer>
+
+    </main>
+
+    <div id="susto" class="susto" aria-hidden="true">
+        <div class="rostro-susto" aria-hidden="true">
+            <span class="ojo ojo-izquierdo"></span>
+            <span class="ojo ojo-derecho"></span>
+            <span class="boca"></span>
+        </div>
+        <p>NO ABRAS.</p>
+    </div>
+
+    <div id="mensajeCuartaParedNivel10" class="mensaje-cuarta-pared-n10" aria-live="polite" hidden></div>
+
+    <script src="script.js"></script>
+    <script src="sketch.js"></script>
+
+</body>
+</html>
