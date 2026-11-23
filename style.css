@@ -114,19 +114,25 @@ body[data-estado="nivel5"][data-ruta-nivel5="confio"] #juego {
     width: min(100%, 680px);
 }
 
-#fragmentoNivel5 {
+#panelNivel5 #fragmentoNivel5 {
     width: 100%;
-    min-height: 52px;
-    max-height: 120px;
-    overflow-y: auto;
-    white-space: pre-line;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    white-space: normal;
     text-align: left;
-    padding: 10px 14px;
+    padding: 4px 7px;
     border-left: 1px solid #83728b;
     color: #c9bdcf;
-    font-size: 12px;
-    line-height: 1.7;
+    font-size: clamp(9px, 1vw, 11px);
+    line-height: 1.25;
     cursor: pointer;
+}
+
+#panelNivel5 .pregunta-nivel {
+    margin: 4px auto 6px;
+    font-size: clamp(14px, 1.6vw, 18px);
+    line-height: 1.25;
 }
 
 #panelNivel5 .mensaje-sistema {
@@ -1291,12 +1297,12 @@ footer {
         font-size: 9px;
     }
 
-    #fragmentoNivel5 {
+    #panelNivel5 #fragmentoNivel5 {
         min-height: 0;
         max-height: none;
-        overflow: hidden;
-        font-size: 10px;
-        line-height: 1.35;
+        overflow: visible;
+        font-size: 9px;
+        line-height: 1.2;
     }
 
     #panelNivel7 .permiso-microfono {
@@ -1436,6 +1442,7 @@ footer {
     #canvas-container canvas {
         max-height: min(30dvh, 230px) !important;
     }
+
 }
 
 @media (min-width: 601px) and (max-height: 650px) {
@@ -1466,4 +1473,89 @@ footer {
     #canvas-container canvas {
         max-height: min(20dvh, 125px) !important;
     }
+
+}
+
+/* Mantener las preguntas del nivel 5 en la parte superior del área visible. */
+body[data-estado="nivel5"] #habitacion {
+    justify-content: flex-start;
+    gap: 0;
+}
+
+body[data-estado="nivel5"] #tituloNivel,
+body[data-estado="nivel5"] #tituloHabitacion,
+body[data-estado="nivel5"] #textoHistoria,
+body[data-estado="nivel5"] #instruccionCanvas {
+    display: none;
+}
+
+body[data-estado="nivel5"] #panelNivel5 {
+    order: 0;
+    flex: 0 1 auto;
+    margin: 0 auto 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+body[data-estado="nivel5"] #habitacion > .opciones {
+    order: 1;
+    margin: 2px auto 0;
+}
+
+/* En los niveles finales, mostrar primero el panel activo y sus respuestas. */
+body[data-estado="nivel6"] #habitacion,
+body[data-estado="nivel7"] #habitacion,
+body[data-estado="nivel8"] #habitacion,
+body[data-estado="nivel9"] #habitacion,
+body[data-estado="nivel10"] #habitacion {
+    justify-content: flex-start;
+    gap: 0;
+}
+
+body[data-estado="nivel6"] #tituloNivel,
+body[data-estado="nivel6"] #tituloHabitacion,
+body[data-estado="nivel6"] #textoHistoria,
+body[data-estado="nivel7"] #tituloNivel,
+body[data-estado="nivel7"] #tituloHabitacion,
+body[data-estado="nivel7"] #textoHistoria,
+body[data-estado="nivel8"] #tituloNivel,
+body[data-estado="nivel8"] #tituloHabitacion,
+body[data-estado="nivel8"] #textoHistoria,
+body[data-estado="nivel9"] #tituloNivel,
+body[data-estado="nivel9"] #tituloHabitacion,
+body[data-estado="nivel9"] #textoHistoria,
+body[data-estado="nivel10"] #tituloNivel,
+body[data-estado="nivel10"] #tituloHabitacion,
+body[data-estado="nivel10"] #textoHistoria {
+    display: none;
+}
+
+body[data-estado="nivel6"] #panelNivel6,
+body[data-estado="nivel7"] #panelNivel7,
+body[data-estado="nivel8"] #panelNivel8,
+body[data-estado="nivel9"] #panelNivel9,
+body[data-estado="nivel10"] #panelNivel10 {
+    order: 0;
+    flex: 0 1 auto;
+    margin: 0 auto 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+body[data-estado="nivel6"] #instruccionCanvas,
+body[data-estado="nivel7"] #instruccionCanvas,
+body[data-estado="nivel8"] #instruccionCanvas,
+body[data-estado="nivel9"] #instruccionCanvas,
+body[data-estado="nivel10"] #instruccionCanvas {
+    order: 1;
+    margin: 2px auto;
+}
+
+body[data-estado="nivel6"] #habitacion > .opciones,
+body[data-estado="nivel7"] #habitacion > .opciones,
+body[data-estado="nivel8"] #habitacion > .opciones,
+body[data-estado="nivel9"] #habitacion > .opciones,
+body[data-estado="nivel10"] #habitacion > .opciones {
+    order: 2;
+    margin: 2px auto 0;
 }

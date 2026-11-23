@@ -103,7 +103,6 @@
             <div id="panelNivel5" class="panel-nivel" hidden>
                 <p class="etiqueta">LEVEL 05: LO QUE RECORDÁS NO NECESARIAMENTE PASÓ</p>
                 <p id="avisoNivel5">La habitación parece tranquila. Tu sombra tarda un instante en seguirte.</p>
-                <p id="fragmentoNivel5" class="mensaje-sistema" aria-live="polite"></p>
                 <div id="preguntaRecuerdosNivel5" hidden>
                     <p class="pregunta-nivel">¿ESTÁS SEGURO DE RECORDAR LO QUE PASÓ?</p>
                     <div class="opciones opciones-nivel">
@@ -111,7 +110,6 @@
                         <button id="btnNivel5RecuerdoNo">NO, HAY COSAS QUE NO RECUERDO</button>
                     </div>
                 </div>
-                <p id="mensajeNivel5" class="mensaje-sistema" aria-live="polite"></p>
                 <div id="preguntaBorrarNivel5" hidden>
                     <p class="pregunta-nivel">SI YO PUDIERA BORRAR UNO DE TUS RECUERDOS PARA QUE DEJES DE SUFRIR, ¿ME LO PERMITIRÍAS?</p>
                     <div class="opciones opciones-nivel">
@@ -119,6 +117,8 @@
                         <button id="btnNivel5BorrarNo">NO, MIS RECUERDOS SON MÍOS</button>
                     </div>
                 </div>
+                <p id="fragmentoNivel5" class="mensaje-sistema" aria-live="polite"></p>
+                <p id="mensajeNivel5" class="mensaje-sistema" aria-live="polite"></p>
             </div>
 
             <div id="panelNivel6" class="panel-nivel" hidden>
@@ -160,6 +160,14 @@
                 <p class="etiqueta">LEVEL 08: DETRÁS DE LAS PAREDES</p>
                 <p id="avisoNivel8">La puerta se cierra detrás de vos. El pasillo parece no terminar.</p>
                 <p id="mensajeComputadoraNivel8" class="mensaje-sistema" aria-live="polite"></p>
+                <div id="preguntaNivel8" hidden>
+                    <p class="pregunta-nivel">SI HUBIERA OTRAS PERSONAS EN ESTE LUGAR, ¿INTENTARÍAS ENCONTRARLAS?</p>
+                    <div class="opciones opciones-nivel opciones-nivel8">
+                        <button data-respuesta-nivel8="buscar">SÍ, QUIERO SABER QUIÉNES SON</button>
+                        <button data-respuesta-nivel8="salir">NO, SOLAMENTE QUIERO SALIR</button>
+                        <button data-respuesta-nivel8="dudar">NO SÉ SI REALMENTE HAY ALGUIEN</button>
+                    </div>
+                </div>
                 <div id="puertasNivel8" class="puertas-nivel8" hidden>
                     <p>El pasillo tiene cinco puertas. ¿Cuál querés observar?</p>
                     <div class="opciones opciones-nivel opciones-puertas8">
@@ -171,14 +179,6 @@
                     </div>
                 </div>
                 <button id="btnEscucharGolpesNivel8" hidden>ESCUCHAR LOS GOLPES</button>
-                <div id="preguntaNivel8" hidden>
-                    <p class="pregunta-nivel">SI HUBIERA OTRAS PERSONAS EN ESTE LUGAR, ¿INTENTARÍAS ENCONTRARLAS?</p>
-                    <div class="opciones opciones-nivel opciones-nivel8">
-                        <button data-respuesta-nivel8="buscar">SÍ, QUIERO SABER QUIÉNES SON</button>
-                        <button data-respuesta-nivel8="salir">NO, SOLAMENTE QUIERO SALIR</button>
-                        <button data-respuesta-nivel8="dudar">NO SÉ SI REALMENTE HAY ALGUIEN</button>
-                    </div>
-                </div>
             </div>
 
             <div id="panelNivel9" class="panel-nivel" hidden>

@@ -264,6 +264,8 @@ const btnNivel5RecuerdoSi = document.getElementById("btnNivel5RecuerdoSi");
 const btnNivel5RecuerdoNo = document.getElementById("btnNivel5RecuerdoNo");
 const btnNivel5BorrarSi = document.getElementById("btnNivel5BorrarSi");
 const btnNivel5BorrarNo = document.getElementById("btnNivel5BorrarNo");
+const mensajeNivel5 = document.getElementById("mensajeNivel5");
+
 const mensajeNivel2 = document.getElementById("mensajeNivel2");
 const btnNivel2Si = document.getElementById("btnNivel2Si");
 const btnNivel2No = document.getElementById("btnNivel2No");
@@ -894,7 +896,7 @@ function interactuarConComputadora() {
         sonidoDecision();
         registroNivel5.comprobaciones += 1;
         if (faseNivel5 === "fragmentos") {
-            fragmentoNivel5.textContent = fragmentosNivel5.join("\n");
+            fragmentoNivel5.textContent = fragmentosNivel5.join("  ·  ");
             mensajeNivel5.textContent = "LA COMPUTADORA NO DISTINGUE ENTRE LO QUE PASÓ Y LO QUE RECUERDA.";
         } else if (faseNivel5 === "pregunta1" || faseNivel5 === "reaccion1") {
             mensajeNivel5.textContent = !respuestaRecuerdosNivel5
@@ -941,6 +943,7 @@ function interactuarConComputadora() {
 }
 
 function interactuarConPuerta() {
+    if (estadoActual === "nivel5" && faseNivel5 === "finalPendiente") return;
     if (estadoActual === "nivel9") {
         sonidoDecision();
         registroNivel9.intentosPuerta += 1;
@@ -976,7 +979,6 @@ function interactuarConPuerta() {
         else mensajeComputadoraNivel6.textContent = "LA PUERTA TODAVÍA NO CEDE. LA COMPUTADORA SIGUE HABLANDO.";
         return;
     }
-    if (estadoActual === "nivel7") return;
     if (estadoActual === "nivel4") {
         sonidoDecision();
         registroNivel4.intentosPuerta += 1;
@@ -1411,11 +1413,11 @@ function iniciarNivel5() {
         : "Algunos objetos están fuera de lugar. La luz falla y quedan errores en la interfaz. Tu sombra no coincide del todo.";
     fragmentoNivel5.textContent = "";
     mensajeNivel5.textContent = "";
-    preguntaRecuerdosNivel5.hidden = true;
+    preguntaRecuerdosNivel5.hidden = false;
     preguntaBorrarNivel5.hidden = true;
     respuestaRecuerdosNivel5 = null;
     respuestaBorrarNivel5 = null;
-    faseNivel5 = "fragmentos";
+    faseNivel5 = "pregunta1";
     inicioNivel5 = Date.now();
     fragmentosNivel5 = crearFragmentosNivel5();
     registroNivel5 = {
@@ -1436,7 +1438,7 @@ function iniciarNivel5() {
         mensajeFinal: ""
     };
     document.body.dataset.rutaNivel5 = respuestaNivel3 === "si" ? "confio" : "dudo";
-    document.getElementById("instruccionCanvas").textContent = "Leé los recuerdos. También podés tocar la sombra y revisar la computadora.";
+    document.getElementById("instruccionCanvas").textContent = "Respondé la pregunta. La computadora seguirá mostrando recuerdos mientras decidís.";
     btnPuerta.hidden = false;
     btnPuerta.disabled = false;
     btnPuerta.textContent = "PROBAR LA PUERTA";
@@ -1477,18 +1479,16 @@ function reproducirFragmentosNivel5() {
     fragmentoNivel5.textContent = "";
     let indice = 0;
     temporizadorFragmentosNivel5 = setInterval(function () {
-        if (estadoActual !== "nivel5" || faseNivel5 !== "fragmentos") {
+        if (estadoActual !== "nivel5" || faseNivel5 !== "pregunta1") {
             clearInterval(temporizadorFragmentosNivel5);
             return;
         }
-        fragmentoNivel5.textContent += (indice ? "\n" : "") + fragmentosNivel5[indice];
+        fragmentoNivel5.textContent += (indice ? "  ·  " : "") + fragmentosNivel5[indice];
         indice += 1;
         if (indice >= fragmentosNivel5.length) {
             clearInterval(temporizadorFragmentosNivel5);
-            faseNivel5 = "pregunta1";
-            document.getElementById("preguntaRecuerdosNivel5").hidden = false;
         }
-    }, 1700);
+    }, 1000);
 }
 
 function responderRecuerdosNivel5(respuesta) {
@@ -1497,12 +1497,14 @@ function responderRecuerdosNivel5(respuesta) {
     respuestaRecuerdosNivel5 = respuesta;
     registroNivel5.respuestaPreguntaMemoria = respuesta;
     registroNivel5.demoraMs = Date.now() - inicioNivel5;
+    preguntaRecuerdosNivel5.hidden = true;
+    clearInterval(temporizadorFragmentosNivel5);
     if (respuesta === "si") {
         fragmentoNivel5.textContent = "";
         mensajeNivel5.textContent = "QUÉ INTERESANTE. ESTÁS MUY SEGURO DE ALGO QUE NO PODÉS COMPROBAR.";
         faseNivel5 = "reaccion1";
     } else {
-        fragmentoNivel5.textContent = fragmentosNivel5.join("\n");
+        fragmentoNivel5.textContent = fragmentosNivel5.join("  ·  ");
         mensajeNivel5.textContent = "NO TE PREOCUPES. YO PUEDO RECORDAR POR VOS.";
         document.body.dataset.rutaNivel5 = "estable";
         faseNivel5 = "reaccion1";
@@ -1512,7 +1514,7 @@ function responderRecuerdosNivel5(respuesta) {
         faseNivel5 = "pregunta2";
         preguntaBorrarNivel5.hidden = false;
         mensajeNivel5.textContent = "¿QUÉ ESTÁS DISPUESTO A ENTREGAR PARA ESCAPAR?";
-    }, 4200);
+    }, 2000);
 }
 
 function responderBorrarNivel5(respuesta) {
@@ -1523,6 +1525,9 @@ function responderBorrarNivel5(respuesta) {
     if (respuesta === "si") registroNivel5.contradicciones += 1;
     preguntaBorrarNivel5.hidden = true;
     faseNivel5 = "finalPendiente";
+    btnPuerta.disabled = true;
+    btnPuerta.textContent = "ESPERÁ EL REGISTRO";
+    document.getElementById("instruccionCanvas").textContent = "La computadora está cerrando el registro de tus decisiones.";
     if (respuestaRecuerdosNivel5 === "no") {
         registroNivel5.mensajeFinal = "CADA VEZ NECESITÁS MENOS DE TU PROPIA MEMORIA";
     } else if (respuestaNivel3 === "si") {
@@ -1537,9 +1542,11 @@ function responderBorrarNivel5(respuesta) {
         if (estadoActual !== "nivel5" || faseNivel5 !== "finalPendiente") return;
         faseNivel5 = "final";
         mensajeNivel5.textContent = registroNivel5.mensajeFinal;
+        btnPuerta.disabled = false;
         btnPuerta.textContent = "AVANZAR AL NIVEL 6";
+        document.getElementById("instruccionCanvas").textContent = "La puerta está disponible. Podés avanzar al nivel 6.";
         fragmentoNivel5.textContent = "";
-    }, 2600);
+    }, 1400);
 }
 
 function iniciarNivel6() {
@@ -2250,7 +2257,7 @@ function iniciarNivel8() {
     tituloHabitacion.textContent = "DETRÁS DE LAS PAREDES";
     textoHistoria.textContent = "La salida del cuarto desemboca en un pasillo demasiado largo. La puerta se cierra detrás de vos.";
     document.getElementById("avisoNivel8").textContent = "La habitación se extendió. Hay cinco puertas y algo parece moverse al fondo.";
-    document.getElementById("instruccionCanvas").textContent = "Podés observar las cinco puertas mientras el pasillo cambia.";
+    document.getElementById("instruccionCanvas").textContent = "Observá las cinco puertas. Después aparece una pregunta y se habilita la salida.";
     mensajeComputadoraNivel8.textContent = "";
     puertasNivel8.hidden = true;
     preguntaNivel8.hidden = true;
@@ -2327,8 +2334,11 @@ function iniciarNivel8() {
     setTimeout(function () {
         if (estadoActual !== "nivel8" || nivel8Fase !== "exploracion") return;
         nivel8Fase = "pregunta";
+        puertasNivel8.hidden = true;
+        btnEscucharGolpesNivel8.hidden = true;
         preguntaNivel8.hidden = false;
         mensajeComputadoraNivel8.textContent = "SI HUBIERA OTRAS PERSONAS EN ESTE LUGAR, ¿INTENTARÍAS ENCONTRARLAS?";
+        document.getElementById("instruccionCanvas").textContent = "Respondé la pregunta para que el pasillo revele la salida.";
     }, 17500);
 }
 
@@ -2491,6 +2501,7 @@ function responderNivel8(respuesta) {
     nivel8Fase = "reaccion";
     registroNivel8.respuesta = respuesta;
     preguntaNivel8.hidden = true;
+    document.getElementById("instruccionCanvas").textContent = "Tu respuesta quedó registrada. Esperá a que el pasillo termine de reaccionar.";
     document.querySelectorAll("[data-respuesta-nivel8]").forEach(function (boton) {
         boton.disabled = true;
         boton.classList.toggle("seleccionada", boton.dataset.respuestaNivel8 === respuesta);
@@ -2583,6 +2594,7 @@ function iniciarNivel9() {
         respuestas: {},
         documentosInvestigados: [],
         encontroDocumento: false,
+        continuacionDocumentoIniciada: false,
         documentoSeleccionado: null,
         sillaInvestigada: false,
         intentosPuerta: 0,
@@ -3264,6 +3276,8 @@ function responderNivel9(indice) {
             }, 2600);
         }
         document.getElementById("avisoNivel9").textContent = "La computadora pide encontrar un documento entre los rastros de la sala.";
+        // Si el jugador encontró la hoja antes de responder, continuar ahora.
+        continuarNivel9TrasDocumento();
         return;
     }
 
@@ -3340,18 +3354,25 @@ function abrirDocumentoNivel9(clave) {
     }
 }
 
+function continuarNivel9TrasDocumento() {
+    if (estadoActual !== "nivel9" || nivel9Fase !== "busqueda" ||
+        !registroNivel9.encontroDocumento || registroNivel9.continuacionDocumentoIniciada) return;
+
+    registroNivel9.continuacionDocumentoIniciada = true;
+    nivel9Fase = "documento-encontrado";
+    mostrarMensajeNivel9("ME DIJO QUE ESTABA HACIENDO TODO BIEN. ESTA VEZ ES DIFERENTE.");
+    document.getElementById("avisoNivel9").textContent = "La computadora vuelve a hablar. Prestá atención a la siguiente pregunta.";
+    nivel9Timer = setTimeout(function () {
+        if (estadoActual !== "nivel9" || nivel9Fase !== "documento-encontrado") return;
+        nivel9Fase = "pregunta-entrada";
+        iniciarPreguntaNivel9("obediencia");
+    }, 1800);
+}
+
 function cerrarDocumentoNivel9() {
     const clave = documentoNivel9.dataset.clave;
     documentoNivel9.hidden = true;
-    if (clave === "advertencia" && nivel9Fase === "busqueda") {
-        nivel9Fase = "documento-encontrado";
-        mostrarMensajeNivel9("ME DIJO QUE ESTABA HACIENDO TODO BIEN. ESTA VEZ ES DIFERENTE.");
-        nivel9Timer = setTimeout(function () {
-            if (estadoActual !== "nivel9" || nivel9Fase !== "documento-encontrado") return;
-            nivel9Fase = "pregunta-entrada";
-            iniciarPreguntaNivel9("obediencia");
-        }, 2300);
-    }
+    if (clave === "advertencia") continuarNivel9TrasDocumento();
 }
 
 function cerrarPanelAcceso() {
@@ -3401,7 +3422,7 @@ fragmentoNivel5.addEventListener("click", function () {
     if (estadoActual !== "nivel5") return;
     registroNivel5.comprobaciones += 1;
     registroNivel5.intentosVerificar = (registroNivel5.intentosVerificar || 0) + 1;
-    fragmentoNivel5.textContent = "EL ARCHIVO NO INCLUYE UNA FUENTE. NO PODÉS VERIFICAR CUÁL VERSIÓN ES CIERTA.\n\n" + fragmentosNivel5.join("\n");
+    fragmentoNivel5.textContent = "EL ARCHIVO NO INCLUYE UNA FUENTE. NO PODÉS VERIFICAR CUÁL VERSIÓN ES CIERTA.  ·  " + fragmentosNivel5.join("  ·  ");
 });
 btnConsultarPista.addEventListener("click", consultarPista);
 formularioAcceso.addEventListener("submit", validarCodigoAcceso);

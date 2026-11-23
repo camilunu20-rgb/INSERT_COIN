@@ -1416,9 +1416,9 @@ function dibujarFallaLuzNivel4() {
 
 function dibujarInscripcionPuertaNivel4() {
     const leida = registroNivel4.leyoInscripcion;
-    const sobre = mouseX >= 372 && mouseX <= 435 && mouseY >= 88 && mouseY <= 150;
-    const visibilidadBase = respuestaNivel3 === "si" ? 28 : 155;
-    const alpha = leida ? 220 : sobre ? min(190, visibilidadBase + 55) : visibilidadBase;
+    const sobre = mouseX >= 368 && mouseX <= 438 && mouseY >= 83 && mouseY <= 157;
+    const visibilidadBase = respuestaNivel3 === "si" ? 55 : 175;
+    const alpha = leida ? 255 : sobre ? min(235, visibilidadBase + 60) : visibilidadBase;
     noStroke();
     fill(157, 143, 153, alpha);
     textAlign(CENTER, CENTER);
@@ -2375,7 +2375,7 @@ function dibujarIndicaciones() {
         return;
     }
     if (enNivel4) {
-        const sobreInscripcion = mouseX >= 372 && mouseX <= 435 && mouseY >= 88 && mouseY <= 150;
+        const sobreInscripcion = mouseX >= 368 && mouseX <= 438 && mouseY >= 83 && mouseY <= 157;
         const sobreMarcas = ((mouseX >= 348 && mouseX <= 367) || (mouseX >= 439 && mouseX <= 458)) && mouseY >= 84 && mouseY <= 185;
         const sobreComputadoraNivel4 = mouseX > 60 && mouseX < 155 && mouseY > 105 && mouseY < 178;
         cursor(sobreInscripcion || sobreMarcas || sobreComputadoraNivel4 || sobrePuerta ? HAND : ARROW);
@@ -2391,12 +2391,15 @@ function dibujarIndicaciones() {
     if (estadoActual === "nivel5") {
         const sobreSombra = mouseX >= 248 && mouseX <= 302 && mouseY >= 78 && mouseY <= 185;
         const sobreComputadora5 = mouseX > 60 && mouseX < 155 && mouseY > 105 && mouseY < 178;
-        cursor(sobreSombra || sobreComputadora5 || sobrePuerta ? HAND : ARROW);
+        const esperandoRegistro = faseNivel5 === "finalPendiente";
+        cursor(!esperandoRegistro && (sobreSombra || sobreComputadora5 || sobrePuerta) ? HAND : ARROW);
         textAlign(CENTER);
         textSize(10);
         noStroke();
         fill(205, 165, 220, 205);
-        text(faseNivel5 === "final" ? "TOCÁ LA PUERTA PARA AVANZAR" : sobreSombra ? "OBSERVAR LA SOMBRA" : "REVISAR LOS RECUERDOS", 250, 231);
+        text(esperandoRegistro ? "EL SISTEMA ESTÁ CERRANDO EL REGISTRO"
+            : faseNivel5 === "final" ? "TOCÁ LA PUERTA PARA AVANZAR"
+                : sobreSombra ? "OBSERVAR LA SOMBRA" : "REVISAR LOS RECUERDOS", 250, 231);
         return;
     }
     if (enNivel3) {
@@ -2654,7 +2657,7 @@ function mousePressed() {
     }
 
     if (estadoActual === "nivel4") {
-        const sobreInscripcion = mouseX >= 372 && mouseX <= 435 && mouseY >= 88 && mouseY <= 150;
+        const sobreInscripcion = mouseX >= 368 && mouseX <= 438 && mouseY >= 83 && mouseY <= 157;
         const sobreMarcas = ((mouseX >= 348 && mouseX <= 367) || (mouseX >= 439 && mouseX <= 458)) && mouseY >= 84 && mouseY <= 185;
         if (sobreInscripcion) {
             leerInscripcionNivel4();
