@@ -1702,9 +1702,20 @@ footer {
 
 /* El teclado de la puerta queda centrado y accesible aunque la escena sea baja. */
 @media (min-width: 601px) {
+    /* Al abrir el teclado, el formulario debe quedar por encima del canvas.
+       Se ocultan detrás solo los controles de la habitación durante el ingreso. */
+    body[data-estado="puerta"] #habitacion {
+        z-index: 3;
+    }
+
+    body[data-estado="puerta"] #habitacion > :not(#panelAcceso) {
+        visibility: hidden;
+    }
+
     body[data-estado="puerta"] #habitacion .panel-acceso {
         position: absolute;
         z-index: 10;
+        visibility: visible;
         top: 50%;
         left: 50%;
         width: min(92%, 540px);
