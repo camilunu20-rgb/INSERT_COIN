@@ -682,6 +682,7 @@ function iniciarJuego() {
     btnCerrarAcceso.textContent = "CANCELAR";
     btnPuerta.disabled = false;
     btnPuerta.textContent = "ABRIR PUERTA";
+    btnVolver.textContent = "ENTRAR A LA HABITACIÓN";
     btnComputadora.hidden = false;
     btnComputadora.textContent = "REVISAR COMPUTADORA";
     btnPuerta.hidden = false;
@@ -811,6 +812,7 @@ function consultarPista() {
     registroPista.hidden = false;
     btnConsultarPista.hidden = true;
     mensajeSistema.textContent = "ARCHIVO RECUPERADO. GUARDÁ LA SECUENCIA PARA MÁS ADELANTE.";
+    btnVolver.textContent = "VOLVER A LA HABITACIÓN";
 }
 
 function interactuarConComputadora() {
@@ -1046,9 +1048,10 @@ function interactuarConPuerta() {
     panelAcceso.hidden = false;
     formularioAcceso.hidden = !pistaEntregada;
     mensajeAcceso.textContent = pistaEntregada
-        ? "INGRESÁ LA SECUENCIA DEL REGISTRO."
-        : "NO HAY NINGUNA SECUENCIA CARGADA. VOLVÉ A LA COMPUTADORA Y LEÉ EL REGISTRO.";
-    btnCerrarAcceso.textContent = "CANCELAR";
+        ? "INGRESÁ EL CÓDIGO QUE MOSTRÓ EL REGISTRO DE ACCESO."
+        : "PRIMERO VOLVÉ A LA COMPUTADORA Y TOCÁ «LEER REGISTRO DE ACCESO». DESPUÉS REGRESÁ Y PROBÁ LA PUERTA.";
+    btnCerrarAcceso.textContent = "VOLVER A LA HABITACIÓN";
+    btnPuerta.textContent = pistaEntregada ? "INGRESAR CÓDIGO" : "BUSCAR EL CÓDIGO";
     if (pistaEntregada) {
         inputCodigoAcceso.value = "";
         inputCodigoAcceso.focus();
@@ -3380,6 +3383,7 @@ function cerrarPanelAcceso() {
     if (estadoActual === "puerta") {
         estadoActual = "habitacion";
         textoHistoria.textContent = "Volvés a la habitación. La puerta sigue cerrada.";
+        btnPuerta.textContent = pistaEntregada ? "INGRESAR CÓDIGO" : "ABRIR PUERTA";
     }
 }
 
