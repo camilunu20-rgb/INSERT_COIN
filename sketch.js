@@ -1422,9 +1422,9 @@ function dibujarInscripcionPuertaNivel4() {
     noStroke();
     fill(157, 143, 153, alpha);
     textAlign(CENTER, CENTER);
-    textLeading(7);
-    textSize(5.5);
-    text("SI PODÉS LEER\nESTO, NO CONFÍES\nHUÍ SI PODÉS", 402, 119);
+    textLeading(9);
+    textSize(8.2);
+    text("SI PODÉS LEER\nESTO,\nNO CONFÍES\nHUÍ SI PODÉS", 402, 119);
     if (respuestaNivel3 === "si" && !leida) {
         fill(21, 17, 22, 68);
         ellipse(402, 118, 39, 22);
@@ -2025,28 +2025,28 @@ function dibujarComputadora(enfocada, pulso) {
     scale(escala);
     noStroke();
     fill(65, 48, 76);
-    rect(0, 0, 85, 55);
+        rect(0, 0, 90, 60);
 
     if (enfocada) {
         const colorPantalla = comportamiento.demoras > 0 ? 155 : comportamiento.respuestasRapidas > 0 ? 205 : respuestaActual === "no" ? 185 : 112;
         fill(colorPantalla + pulso * 35, respuestaActual === "no" ? 105 : 184, respuestaActual === "no" ? 150 : 170, 225);
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         fill(9, 17, 18);
         textAlign(CENTER, CENTER);
-        textSize(13);
+        textSize(16);
         text(pistaEntregada ? codigoPista.textContent : "LOCKED", 42, 27);
     } else if (estadoActual === "nivel6") {
         const apagada = nivel6Fase === "final" || nivel6Fase === "cierre";
         fill(apagada ? color(25, 22, 28) : nivel6Fase === "control-no" ? color(194, 133, 153) : color(113 + pulso * 25, 172, 148));
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         if (!apagada) {
             fill(5, 12, 12);
             textAlign(CENTER, CENTER);
             textLeading(8);
-            textSize(6.4);
-            const mensajePantalla = nivel6Fase === "pregunta" ? "¿ESTÁS ELIGIENDO?"
-                : nivel6Fase === "control-si" ? "NUNCA DIJE LO CONTRARIO"
-                    : nivel6Fase === "control-no" && Date.now() - nivel6RespuestaMs >= 1800 ? "ENTONCES, ¿POR QUÉ?"
+            textSize(8);
+            const mensajePantalla = nivel6Fase === "pregunta" ? "¿ESTÁS\nELIGIENDO?"
+                : nivel6Fase === "control-si" ? "NUNCA DIJE\nLO CONTRARIO"
+                    : nivel6Fase === "control-no" && Date.now() - nivel6RespuestaMs >= 1800 ? "ENTONCES,\n¿POR QUÉ?"
                         : nivel6Fase === "control-no" ? ""
                         : "SESIÓN OBSERVADA";
             text(mensajePantalla, 42, 27);
@@ -2057,16 +2057,16 @@ function dibujarComputadora(enfocada, pulso) {
             }
             if (nivel6Fase === "mensajes" && frameCount % 181 < 3) {
                 fill(5, 12, 12);
-                textSize(6.4);
+                textSize(8);
                 text("SESI_N OBSERVADA", 42, 27);
             }
         }
     } else if (estaEnNivel7) {
         const apagada = nivel7Fase === "final" || nivel7Fase === "cierre-final";
         fill(apagada ? color(18, 16, 21) : nivel7Fase === "anomalia-respuesta" ? color(191, 134, 159) : color(111 + pulso * 20, 166, 148));
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         if (!apagada) {
-            fill(5, 12, 12); textAlign(CENTER, CENTER); textLeading(7); textSize(5.2);
+            fill(5, 12, 12); textAlign(CENTER, CENTER); textLeading(9); textSize(7.5);
             const estadoPantalla = nivel7Fase === "consentimiento" ? "COMPROBANDO\nPRESENCIA"
                 : nivel7Fase === "prueba-presencia" ? "¿HAY ALGUIEN\nAHÍ?"
                     : nivel7Fase === "anomalia-respuesta" ? "YO NO FUI."
@@ -2082,9 +2082,9 @@ function dibujarComputadora(enfocada, pulso) {
     } else if (estaEnNivel8) {
         const apagada = nivel8Fase === "final";
         fill(apagada ? color(20, 18, 22) : nivel8Fase === "anomalia" ? color(181, 125, 148) : color(105 + pulso * 22, 158, 139));
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         if (!apagada) {
-            fill(4, 12, 10); textAlign(CENTER, CENTER); textLeading(7); textSize(5.2);
+            fill(4, 12, 10); textAlign(CENTER, CENTER); textLeading(9); textSize(7.5);
         const texto = nivel8Fase === "anomalia" ? "NO ESCUCHASTE\nNADA"
                 : nivel8Fase === "regreso" ? "LISTO PARA VERLAS"
                 : nivel8Fase === "final" ? "CINCO\nPOSIBILIDADES"
@@ -2098,11 +2098,11 @@ function dibujarComputadora(enfocada, pulso) {
     } else if (estadoActual === "nivel5") {
         const brillante = faseNivel5 === "fragmentos" || faseNivel5 === "pregunta1" || faseNivel5 === "reaccion1" || faseNivel5 === "pregunta2";
         fill(brillante ? color(118, 177, 153) : color(55, 54, 66));
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         fill(7, 16, 15);
         textAlign(CENTER, CENTER);
-        textLeading(6);
-        textSize(5.2);
+        textLeading(9);
+        textSize(7.5);
         const textoRecuerdo = faseNivel5 === "fragmentos"
             ? "ARCHIVO DE\nRECUERDOS\nREPRODUCIENDO"
             : faseNivel5 === "pregunta1"
@@ -2115,11 +2115,11 @@ function dibujarComputadora(enfocada, pulso) {
         text(textoRecuerdo, 42, 27);
     } else if (estadoActual === "nivel4" && mensajeComputadoraNivel4) {
         fill(respuestaNivel4 === "si" ? color(121, 197, 158) : color(189, 157, 196));
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         fill(7, 16, 15);
         textAlign(CENTER, CENTER);
-        textLeading(6);
-        textSize(5.2);
+        textLeading(9);
+        textSize(7.5);
         let textoPantalla;
         if (!reaccionNivel4Finalizada && respuestaNivel4 === "si") {
             textoPantalla = "SABÍA QUE\nACEPTARÍAS\nPERDER ALGO";
@@ -2135,11 +2135,11 @@ function dibujarComputadora(enfocada, pulso) {
         text(textoPantalla, 42, 27);
     } else if (estadoActual === "nivel3" && mensajeFinalNivel3) {
         fill(respuestaNivel3 === "si" ? color(91, 202, 164) : color(191, 154, 198));
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         fill(7, 16, 15);
         textAlign(CENTER, CENTER);
-        textLeading(6);
-        textSize(5.3);
+        textLeading(9);
+        textSize(7.5);
         const mensajeCorto = sombraPuertaTocada
             ? "ENCONTRASTE LO\nESCONDIDO.\nTAMBIÉN VISTE ESO."
             : respuestaNivel3 === "si"
@@ -2148,12 +2148,12 @@ function dibujarComputadora(enfocada, pulso) {
         text(mensajeCorto, 42, 27);
     } else {
         fill(145, 90, 170);
-        rect(10, 10, 65, 35);
+        rect(8, 8, 74, 40);
         fill(210, 165, 235, 100);
         rect(15, 15, 55, 25);
     }
     fill(52, 40, 62);
-    rect(30, 55, 25, 9);
+    rect(32, 60, 25, 9);
     pop();
 }
 
@@ -2316,7 +2316,7 @@ function dibujarIndicaciones() {
     const enHabitacion = estadoActual === "habitacion" || estadoActual === "puerta" || enNivel2;
     const sobreComputadora = !enNivel2 && (enHabitacion
         ? mouseX > 60 && mouseX < 155 && mouseY > 105 && mouseY < 178
-        : mouseX > 170 && mouseX < 305 && mouseY > 68 && mouseY < 165);
+        : mouseX > 170 && mouseX < 310 && mouseY > 68 && mouseY < 165);
     const sobrePuerta = mouseX > 360 && mouseX < 445 && mouseY > 70 && mouseY < 190;
     const sobreNota = mouseX >= 113 && mouseX <= 149 && mouseY >= 196 && mouseY <= 222;
     if (enNivel8) {
@@ -2705,7 +2705,7 @@ function mousePressed() {
     }
 
     if (estadoActual === "computadora") {
-        if (mouseX > 170 && mouseX < 305 && mouseY > 68 && mouseY < 165) {
+        if (mouseX > 170 && mouseX < 310 && mouseY > 68 && mouseY < 165) {
             interactuarConComputadora();
             return false;
         }
