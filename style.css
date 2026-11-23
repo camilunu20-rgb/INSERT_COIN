@@ -1637,6 +1637,12 @@ footer {
         max-height: min(34dvh, 230px, 100%) !important;
     }
 
+    /* Dejar un poco más de espacio al contenido de la computadora; el único
+       cambio visual es que su canvas ocupa menos alto. */
+    body[data-estado="computadora"] #canvas-container {
+        flex-basis: 105px;
+    }
+
     /* En las habitaciones, subir y compactar la decisión para reservar más
        espacio visible al escenario sin esconder las opciones. */
     #habitacion.pantalla.activa {
