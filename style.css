@@ -1577,6 +1577,8 @@ footer {
 
     /* En cualquier nivel, la pregunta y sus opciones conservan su altura. */
     #habitacion.pantalla.activa {
+        flex: 0 1 auto;
+        min-height: min-content;
         justify-content: flex-start;
         overflow: visible;
     }
@@ -1624,14 +1626,15 @@ footer {
         letter-spacing: 1.5px;
     }
 
-    /* Reservar más altura para el contenido y las respuestas, menos para el canvas. */
+    /* El canvas ocupa el espacio disponible después del bloque de respuestas. */
     #canvas-container {
-        flex: 0 1 auto;
+        flex: 1 1 160px;
         min-height: 0;
+        max-height: min(34dvh, 230px);
     }
 
     #canvas-container canvas {
-        max-height: min(34dvh, 230px) !important;
+        max-height: min(34dvh, 230px, 100%) !important;
     }
 
     /* En las habitaciones, subir y compactar la decisión para reservar más
@@ -1646,14 +1649,14 @@ footer {
 
     #habitacion > h2 {
         margin: 1px 0 3px;
-        font-size: clamp(16px, 2.4vh, 20px);
+        font-size: clamp(17px, 2.6vh, 21px);
         line-height: 1.15;
     }
 
     #habitacion #textoHistoria {
         margin: 1px auto 3px;
-        font-size: 12px;
-        line-height: 1.2;
+        font-size: 13px;
+        line-height: 1.25;
     }
 
     #habitacion .panel-nivel:not([hidden]) {
@@ -1670,15 +1673,15 @@ footer {
 
     #habitacion .panel-nivel:not([hidden]) .pregunta-nivel {
         margin: 1px auto 3px;
-        font-size: clamp(12px, 1.05vw, 14px);
-        line-height: 1.2;
+        font-size: clamp(14px, 1.1vw, 15px);
+        line-height: 1.25;
     }
 
     #habitacion .panel-nivel:not([hidden]) .opciones button {
-        min-height: 36px;
-        padding: 5px 7px;
-        font-size: 11px;
-        line-height: 1.15;
+        min-height: 38px;
+        padding: 6px 8px;
+        font-size: 12px;
+        line-height: 1.2;
     }
 }
 
