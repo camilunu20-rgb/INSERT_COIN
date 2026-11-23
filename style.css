@@ -1574,6 +1574,65 @@ footer {
         margin-top: 2px;
         padding-top: 3px;
     }
+
+    /* En cualquier nivel, la pregunta y sus opciones conservan su altura. */
+    #habitacion.pantalla.activa {
+        justify-content: flex-start;
+        overflow: visible;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) {
+        flex: 0 0 auto;
+        width: min(100%, 820px);
+        max-height: none;
+        margin: 3px auto;
+        padding: 5px 9px;
+        overflow: visible;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .pregunta-nivel {
+        margin: 3px auto 5px;
+        font-size: clamp(14px, 1.5vw, 18px);
+        line-height: 1.25;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .opciones {
+        flex: 0 0 auto;
+        gap: 5px;
+        margin: 4px auto;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .opciones button {
+        flex: 1 1 42%;
+        min-width: min(190px, 42%);
+        min-height: 38px;
+        padding: 6px 8px;
+        font-size: 12px;
+        line-height: 1.2;
+        white-space: normal;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .mensaje-sistema,
+    #habitacion .panel-nivel:not([hidden]) > p {
+        margin-top: 3px;
+        margin-bottom: 3px;
+        line-height: 1.25;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .etiqueta {
+        font-size: 9px;
+        letter-spacing: 1.5px;
+    }
+
+    /* Reservar más altura para el contenido y las respuestas, menos para el canvas. */
+    #canvas-container {
+        flex: 0 1 auto;
+        min-height: 0;
+    }
+
+    #canvas-container canvas {
+        max-height: min(25dvh, 170px) !important;
+    }
 }
 
 /* El teclado de la puerta queda centrado y accesible aunque la escena sea baja. */
