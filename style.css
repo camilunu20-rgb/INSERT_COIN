@@ -1631,7 +1631,54 @@ footer {
     }
 
     #canvas-container canvas {
-        max-height: min(25dvh, 170px) !important;
+        max-height: min(34dvh, 230px) !important;
+    }
+
+    /* En las habitaciones, subir y compactar la decisión para reservar más
+       espacio visible al escenario sin esconder las opciones. */
+    #habitacion.pantalla.activa {
+        gap: 0;
+    }
+
+    #habitacion .titulo-nivel {
+        margin: 0 0 2px;
+    }
+
+    #habitacion > h2 {
+        margin: 1px 0 3px;
+        font-size: clamp(16px, 2.4vh, 20px);
+        line-height: 1.15;
+    }
+
+    #habitacion #textoHistoria {
+        margin: 1px auto 3px;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) {
+        margin-top: 1px;
+        margin-bottom: 1px;
+        padding: 3px 8px;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .etiqueta {
+        margin: 0 0 2px;
+        font-size: 8px;
+        letter-spacing: 1.2px;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .pregunta-nivel {
+        margin: 1px auto 3px;
+        font-size: clamp(12px, 1.05vw, 14px);
+        line-height: 1.2;
+    }
+
+    #habitacion .panel-nivel:not([hidden]) .opciones button {
+        min-height: 36px;
+        padding: 5px 7px;
+        font-size: 11px;
+        line-height: 1.15;
     }
 }
 
