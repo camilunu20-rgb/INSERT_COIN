@@ -1640,7 +1640,16 @@ footer {
     /* Dejar un poco más de espacio al contenido de la computadora; el único
        cambio visual es que su canvas ocupa menos alto. */
     body[data-estado="computadora"] #canvas-container {
-        flex-basis: 105px;
+        flex: 0 1 165px;
+        min-height: 0;
+    }
+
+    body[data-estado="computadora"] #canvas-container canvas {
+        max-height: min(30dvh, 200px, 100%) !important;
+    }
+
+    body[data-estado="computadora"] #computadora.pantalla.activa {
+        flex: 0 0 auto;
     }
 
     /* En las habitaciones, subir y compactar la decisión para reservar más
